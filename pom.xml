@@ -151,7 +151,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>carlimit</finalName>
+        <finalName>carlimit-api</finalName>
         <!-- 编译的时候使用JDK8和UTF8编码 -->
         <plugins>
             <plugin>
