@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SessionCallback;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mapbar.carlimit.dao.CarLimitDao;
@@ -20,9 +21,14 @@ public class CarLimitDaoImpl implements CarLimitDao {
 	@Autowired
 	private RedisTemplate<String, Map<String, String>> redisTemplate;
 
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;
+
 	@Override
 	public String getLimitDataByCity(LimitCityEnum city, String key) {
-		return (String) redisTemplate.opsForHash().get(CACHE_PREFIX + city.getCode(), key);
+        RedisOperations<String, String> operations = stringRedisTemplate.opsForList().getOperations();
+        operations.keys("");
+        return (String) redisTemplate.opsForHash().get(CACHE_PREFIX + city.getCode(), key);
 	}
 
 	@Override
